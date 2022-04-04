@@ -24,6 +24,7 @@ public class GameController {
     private int level;
     private float timer;
     private Music music;
+    private Bot bot;
 
 
     public float getTimer() {
@@ -70,6 +71,8 @@ public class GameController {
         return hero;
     }
 
+    public Bot getBot() {return bot;}
+
     public GameController(SpriteBatch batch) {
         this.background = new Background(this);
         this.bulletController = new BulletController(this);
@@ -84,6 +87,8 @@ public class GameController {
         Gdx.input.setInputProcessor(stage);
         this.level = 1;
         generateBigAsteroids(2);
+
+        this.bot = new Bot(this);
 
         this.music = Assets.getInstance().getAssetManager().get("audio/mortal.mp3");
         this.music.setLooping(true);
@@ -111,6 +116,7 @@ public class GameController {
         powerUpsController.update(dt);
         infoController.update(dt);
         hero.update(dt);
+        bot.update(dt);
         stage.act(dt);
         checkCollisions();
         if (!hero.isAlive()) {
@@ -184,6 +190,13 @@ public class GameController {
                 particleController.getEffectBuilder().takePowerUpsEffect(pu);
                 pu.deactivate();
             }
+        }
+        // действия бота против героя
+        if (hero.getHitArea().overlaps(bot.getAlarmZone())) {
+            tempVec.set(hero.getPosition()).sub(bot.getPosition()).nor();
+            bot.getVelocity().mulAdd(tempVec, 10);
+            bot.tryToFire();
+
         }
     }
 
