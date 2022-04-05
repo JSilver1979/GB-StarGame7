@@ -140,10 +140,10 @@ public class Ship {
         }
     }
 
-    public void tryToFire() {
+    public void tryToFire(Bullet.Type type) {
         if (fireTimer > 0.2) {
             fireTimer = 0.0f;
-            currentWeapon.fire();
+            currentWeapon.fire(type);
         }
     }
 }

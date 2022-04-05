@@ -157,7 +157,7 @@ public class Hero extends Ship {
             gc.setPause(true);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            tryToFire();
+            tryToFire(Bullet.Type.HERO);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             angle += 180 * dt;

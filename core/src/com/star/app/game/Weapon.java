@@ -46,7 +46,7 @@ public class Weapon {
         this.shootSound = Assets.getInstance().getAssetManager().get("audio/shoot.mp3");
     }
 
-    public void fire() {
+    public void fire(Bullet.Type type) {
         if (curBullets > 0) {
             curBullets--;
             shootSound.play();
@@ -58,7 +58,7 @@ public class Weapon {
                 vx = ship.getVelocity().x + bulletSpeed * MathUtils.cosDeg(ship.getAngle() + slots[i].z);
                 vy = ship.getVelocity().y + bulletSpeed * MathUtils.sinDeg(ship.getAngle() + slots[i].z);
 
-                gc.getBulletController().setup(x, y, vx, vy);
+                gc.getBulletController().setup(type, x, y, vx, vy);
             }
         }
     }
